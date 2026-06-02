@@ -5,11 +5,13 @@ Native Python client for [**kb0**](https://github.com/vitorchristoval/kb0) — t
 This package hides the MCP plumbing and gives you a clean async `VaultClient`.
 
 ```bash
-pip install kb0
+pip install kb0-mcp
 ```
 
+> The PyPI package is `kb0-mcp`; you still `import kb0` in code.
+>
 > **Requires the kb0 server.** This is a client — it spawns the `kb0` binary as a
-> subprocess. Install it once with Node: `npm install -g kb0`, then `kb0 init my-vault`.
+> subprocess. Install it once with Node: `npm install -g kb0-mcp`, then `kb0 init my-vault`.
 
 ## Quickstart
 
