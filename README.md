@@ -102,6 +102,14 @@ of markdown under git; this client is just an ergonomic way for Python agents to
 talk to it. See the [main repo](https://github.com/vitorchristoval/kb0) for the
 architecture.
 
+## Audit log
+
+Every call you make through the client is recorded server-side to
+`<vault>/.vault-index/kb0.log` as content-free JSON lines — the path read, the
+query searched, and the paths a search returned, never the note bodies. Failed
+and denied calls are logged too, so you can audit what an agent read and
+searched, not just what it changed (git already covers writes).
+
 ## License
 
 Apache 2.0.
