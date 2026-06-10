@@ -46,6 +46,26 @@ async def main():
 asyncio.run(main())
 ```
 
+## Hosted vault (kb0 cloud)
+
+Point the same client at a `kb0://` address with your API key and the vault
+lives on the kb0 cloud — no local files, no `kb0` engine install, pure Python
+over HTTPS. Same methods; every operation lands in your audit trail:
+
+```python
+async with VaultClient(
+    vault="kb0://team-kb",
+    agent="my-bot",
+    api_key="kb0_live_...",   # create one in the kb0 dashboard (or set KB0_API_KEY)
+) as kb:
+    await kb.write("notes/idea.md", title="Idea", content="...")
+    hits = await kb.search("idea")          # hosted keyword search
+    graph = await kb.backlinks("notes/idea.md")
+```
+
+On a **local** vault, passing `api_key=` (or setting `KB0_API_KEY`) enables
+content-free audit forwarding to the same dashboard.
+
 ## Configuration
 
 `VaultClient` passes everything through to `kb0 serve`:
@@ -58,6 +78,8 @@ VaultClient(
     strict=False,             # require .vault-policy.yaml if True
     command="kb0",            # override the binary path if needed
     env={"KB0_EMBEDDING_MODEL": "text-embedding-3-large"},
+    api_key="kb0_live_...",   # optional — audit forwarding / hosted vaults
+    cloud_url=None,           # override the kb0 cloud base URL (kb0:// vaults)
 )
 ```
 
