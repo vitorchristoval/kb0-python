@@ -62,17 +62,22 @@ class RemoteVault:
         api_key: str,
         agent: str,
         *,
+        vault_name: str = "",
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
         self._base = cloud_url.rstrip("/")
         self._agent = agent
+        headers = {
+            "authorization": f"Bearer {api_key}",
+            # stamps the agent identity on hosted-vault audit events
+            "x-kb0-agent": agent,
+        }
+        if vault_name:
+            # kb0://<name> routing — addresses one of the tenant's named vaults
+            headers["x-kb0-vault"] = vault_name
         self._http = httpx.AsyncClient(
             base_url=self._base,
-            headers={
-                "authorization": f"Bearer {api_key}",
-                # stamps the agent identity on hosted-vault audit events
-                "x-kb0-agent": agent,
-            },
+            headers=headers,
             timeout=30.0,
             transport=transport,
         )

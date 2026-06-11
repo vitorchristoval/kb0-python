@@ -97,7 +97,10 @@ class VaultClient:
                     "kb0 dashboard and pass api_key=... or set KB0_API_KEY."
                 )
             cloud_url = self._cloud_url or os.environ.get("KB0_CLOUD_URL") or DEFAULT_CLOUD_URL
-            self._remote = RemoteVault(cloud_url, api_key, self.agent, transport=self._transport)
+            vault_name = self.vault[len("kb0://"):].rstrip("/")
+            self._remote = RemoteVault(
+                cloud_url, api_key, self.agent, vault_name=vault_name, transport=self._transport
+            )
             return self
 
         # Imported lazily so the package can be imported (and unit-tested with a

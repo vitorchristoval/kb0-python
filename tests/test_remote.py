@@ -77,6 +77,8 @@ class HostedModeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(req.url, f"{CLOUD}/v1/vault/tree")
         self.assertEqual(req.headers["authorization"], "Bearer kb0_live_x")
         self.assertEqual(req.headers["x-kb0-agent"], "bot")
+        # the kb0://team-kb name routes to the named vault server-side
+        self.assertEqual(req.headers["x-kb0-vault"], "team-kb")
 
     async def test_write_puts_note_and_maps_output(self):
         calls = []
